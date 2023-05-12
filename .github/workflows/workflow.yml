@@ -24,4 +24,10 @@ jobs:
         id: gitversion
       - name: Get the GitVersion output
         run: echo "The GitVersion is ${{ steps.gitversion.outputs.semVer }}"
-
+      - name: release our repo
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.gitversion.outputs.semVer }}
+          release_name: Release ${{ steps.gitversion.outputs.semVer }}
